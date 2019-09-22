@@ -1,0 +1,24 @@
+bintray {
+    user = System.getProperty('bintray.user')
+    key = System.getProperty('bintray.key')
+    publications = ['mavenPublication']
+    publish = true
+    override = true
+
+    pkg {
+        repo = 'educode'
+        name = 'shared'
+        userOrg = 'hhu-bsinfo'
+        licenses = ['GPL-3.0']
+        websiteUrl = 'https://educode.hhu.de'
+        vcsUrl = 'https://github.com/hhu-educode/shared.git'
+        labels = ['shared', 'utils']
+        githubRepo = 'hhu-educode/shared'
+        githubReleaseNotesFile = 'README.md'
+
+        version {
+            name = project.version
+            released  = new Date()
+        }
+    }
+}
