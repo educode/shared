@@ -6,7 +6,7 @@ plugins {
 }
 
 group 'de.hhu.educode'
-version '1.0.0' + (Boolean.valueOf(System.getProperty('release')) ? '' : '-SNAPSHOT')
+version '1.0.1' + (Boolean.valueOf(System.getProperty('release')) ? '' : '-SNAPSHOT')
 
 sourceCompatibility = 11
 targetCompatibility = 11
