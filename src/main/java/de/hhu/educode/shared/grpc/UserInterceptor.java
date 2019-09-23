@@ -20,20 +20,29 @@ public class UserInterceptor implements ServerInterceptor {
     private static final String HEADER_PREFIX = "Bearer ";
     private static final Pattern HEADER_PATTERN = Pattern.compile(HEADER_PREFIX);
 
+    private static final int EXPECTED_HEADER_PARTS = 2;
+
     @Override
     public <ReqT, RespT> ServerCall.Listener<ReqT> interceptCall(ServerCall<ReqT, RespT> call, Metadata headers, ServerCallHandler<ReqT, RespT> next) {
         var authHeader = headers.get(AUTHORIZATION_KEY);
         if (authHeader == null || !authHeader.startsWith(HEADER_PREFIX)) {
+            log.debug("Authentication header not present or invalid");
             return next.startCall(call, headers);
         }
 
-        var token = HEADER_PATTERN.split(authHeader)[1];
+        var headerParts = HEADER_PATTERN.split(authHeader);
+        if (headerParts.length != EXPECTED_HEADER_PARTS) {
+            log.debug("Authentication header invalid");
+            return next.startCall(call, headers);
+        }
 
         try {
+            var token = headerParts[1];
             var user = getUser(SignedJWT.parse(token).getJWTClaimsSet());
             var context = Context.current().withValue(CONTEXT_KEY, user);
             return Contexts.interceptCall(context, call, headers, next);
         } catch (ParseException ignored) {
+            log.debug("Parsing authentication token failed");
             return next.startCall(call, headers);
         }
     }
