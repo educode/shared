@@ -37,7 +37,7 @@ public class ReactiveUserHolder {
     }
 
     public static <T> Mono<T> assertRole(Role role, Mono<T> mono) {
-        return mono.flatMap(it -> currentUser())
+        return currentUser()
                 .switchIfEmpty(Mono.error(Status.UNAUTHENTICATED.asException()))
                 .filter(user -> user.hasRole(role))
                 .switchIfEmpty(Mono.error(Status.PERMISSION_DENIED.asException()))
@@ -45,7 +45,7 @@ public class ReactiveUserHolder {
     }
 
     public static <T> Mono<T> assertExactRole(Role role, Mono<T> mono) {
-        return mono.flatMap(it -> currentUser())
+        return currentUser()
                 .switchIfEmpty(Mono.error(Status.UNAUTHENTICATED.asException()))
                 .filter(user -> user.hasExactRole(role))
                 .switchIfEmpty(Mono.error(Status.PERMISSION_DENIED.asException()))
@@ -53,7 +53,7 @@ public class ReactiveUserHolder {
     }
 
     public static <T> Flux<T> assertRole(Role role, Flux<T> flux) {
-        return flux.flatMap(it -> currentUser())
+        return currentUser()
                 .switchIfEmpty(Mono.error(Status.UNAUTHENTICATED.asException()))
                 .filter(user -> user.hasRole(role))
                 .switchIfEmpty(Mono.error(Status.PERMISSION_DENIED.asException()))
@@ -61,7 +61,7 @@ public class ReactiveUserHolder {
     }
 
     public static <T> Flux<T> assertExactRole(Role role, Flux<T> flux) {
-        return flux.flatMap(it -> currentUser())
+        return currentUser()
                 .switchIfEmpty(Mono.error(Status.UNAUTHENTICATED.asException()))
                 .filter(user -> user.hasExactRole(role))
                 .switchIfEmpty(Mono.error(Status.PERMISSION_DENIED.asException()))
