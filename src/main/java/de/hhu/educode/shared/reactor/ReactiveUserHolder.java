@@ -17,7 +17,7 @@ public class ReactiveUserHolder {
     public static Mono<User> currentUser() {
         return Mono.subscriberContext()
                 .filter(ctx -> ctx.hasKey(USER_KEY))
-                .flatMap(ctx -> ctx.<Mono<User>>get(USER_KEY));
+                .map(ctx -> ctx.<User>get(USER_KEY));
     }
 
     public static Context currentUserContext() {
