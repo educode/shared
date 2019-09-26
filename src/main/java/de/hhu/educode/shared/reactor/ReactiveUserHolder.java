@@ -21,7 +21,8 @@ public class ReactiveUserHolder {
     }
 
     public static Context currentUserContext() {
-        return Context.of(USER_KEY, UserInterceptor.CONTEXT_KEY.get());
+        final var user = UserInterceptor.CONTEXT_KEY.get();
+        return user != null ? Context.of(USER_KEY, user) : Context.empty();
     }
 
     public static Function<Context, Context> clearContext() {
