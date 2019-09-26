@@ -16,9 +16,11 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'io.grpc:grpc-api:1.23.0'
     implementation 'com.nimbusds:nimbus-jose-jwt:7.8'
     implementation 'org.slf4j:slf4j-api:1.7.28'
+
+    compileOnly 'io.grpc:grpc-api:1.23.0'
+    compileOnly 'io.projectreactor:reactor-core:3.2.10.RELEASE'
 
     testImplementation 'org.junit.jupiter:junit-jupiter:5.5.2'
     testImplementation 'org.assertj:assertj-core:3.13.2'
