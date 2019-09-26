@@ -20,16 +20,20 @@ public class ReactiveUserHolder {
                 .flatMap(ctx -> ctx.<Mono<User>>get(USER_KEY));
     }
 
+    public static Context currentUserContext() {
+        return Context.of(USER_KEY, UserInterceptor.CONTEXT_KEY.get());
+    }
+
     public static Function<Context, Context> clearContext() {
         return context -> context.delete(USER_KEY);
     }
 
     public static Flux<?> withCurrentUser(Flux<?> flux) {
-        return flux.subscriberContext(Context.of(USER_KEY, UserInterceptor.CONTEXT_KEY.get()));
+        return flux.subscriberContext(currentUserContext());
     }
 
     public static Mono<?> withCurrentUser(Mono<?> mono) {
-        return mono.subscriberContext(Context.of(USER_KEY, UserInterceptor.CONTEXT_KEY.get()));
+        return mono.subscriberContext(currentUserContext());
     }
 
     public static <T> Mono<T> assertRole(Role role, Mono<T> mono) {
