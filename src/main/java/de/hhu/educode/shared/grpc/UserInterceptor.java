@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 @Slf4j
 public class UserInterceptor implements ServerInterceptor {
 
-    public static final Context.Key<User> CONTEXT_KEY = Context.key("CurrentUser");
+    public static final Context.Key<User> CONTEXT_KEY = Context.key("de.hhu.educode.user");
     private static final Metadata.Key<String> AUTHORIZATION_KEY = Metadata.Key.of("Authorization", Metadata.ASCII_STRING_MARSHALLER);
 
     private static final String HEADER_PREFIX = "Bearer ";
